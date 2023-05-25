@@ -13,8 +13,7 @@ FROM node:18-alpine as migration
 
 WORKDIR /app
 
-COPY --from=building /build/dist/migrations/*.js /app/migrations/
-COPY --from=building ./build/dist/config /app/config
+COPY --from=building /build/dist/migrations/*.js /app/migrations
 COPY --from=building /build/dist/ormconfig.js /app
 COPY --from=building ./build/node_modules /app/node_modules
 
@@ -22,7 +21,7 @@ CMD npx typeorm -d ormconfig.js migration:run
 
 FROM node:18-alpine as production
 
-WORKDIR /
+WORKDIR /app
 
 COPY --from=building ./build/dist/src/ /app
 COPY --from=building ./build/dist/config /config
