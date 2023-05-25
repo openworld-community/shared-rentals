@@ -1,0 +1,35 @@
+version: "3.7"
+
+services:
+  front:
+    build:
+      dockerfile: docker/front.Dockerfile
+      context: ..
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+
+  api:
+    build:
+      dockerfile: docker/back.Dockerfile
+      context: ..
+    depends_on:
+      - db
+  db:
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: shared_rentals
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+
+networks:
+  default:
