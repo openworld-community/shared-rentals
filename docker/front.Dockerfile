@@ -3,7 +3,7 @@ FROM node:18-alpine as building
 WORKDIR /app
 
 COPY sr-front/package*.json /app
-RUN npm install
+RUN npm install --no-audit --no-fund
 
 COPY ./sr-front /app
 

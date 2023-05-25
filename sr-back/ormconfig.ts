@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm';
-import loadConfig from './config/db';
+import loadConfig from './config/database.config';
 
 export const AppDataSource = new DataSource({
   type: 'postgres',

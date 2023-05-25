@@ -15,6 +15,14 @@ services:
     build:
       dockerfile: docker/back.Dockerfile
       context: ..
+    ports:
+      - "3000:3000"
+    environment:
+      APP_PORT: 3000
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
     depends_on:
       - db
       - migrations
@@ -36,6 +44,9 @@ services:
       dockerfile: docker/back.Dockerfile
       context: ..
       target: migration
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
     depends_on:
       - db
 
