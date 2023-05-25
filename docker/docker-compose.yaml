@@ -9,6 +9,7 @@ services:
       - "80:80"
     depends_on:
       - api
+      - migrations
 
   api:
     build:
@@ -16,6 +17,8 @@ services:
       context: ..
     depends_on:
       - db
+      - migrations
+
   db:
     image: postgres:15-alpine
     restart: always
@@ -27,6 +30,14 @@ services:
       - 5432:5432
     volumes:
       - postgres_data:/var/lib/postgresql/data
+
+  migrations:
+    build:
+      dockerfile: docker/back.Dockerfile
+      context: ..
+      target: migration
+    depends_on:
+      - db
 
 volumes:
   postgres_data:
