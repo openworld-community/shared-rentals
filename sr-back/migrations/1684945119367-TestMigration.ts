@@ -4,7 +4,7 @@ export class TestMigration1684945119367 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     queryRunner.query(
       `CREATE TABLE IF NOT EXISTS
-        app (id INT NOT NULL AUTO_INCREMENT, lastRequestedAt DATETIME NOT NULL, PRIMARY KEY (id))`,
+        app (id serial PRIMARY KEY, lastRequestedAt TIMESTAMP NOT NULL)`,
     );
     queryRunner.query(`INSERT INTO app (lastRequestedAt) VALUES (NOW())`);
   }

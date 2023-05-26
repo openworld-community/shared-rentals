@@ -7,6 +7,10 @@ import { Repository } from 'typeorm';
 export class AppService {
   constructor(@InjectRepository(App) private appRepository: Repository<App>) {}
   getApp(): Promise<App> {
-    return this.appRepository.findOneOrFail({});
+    return this.appRepository.findOneOrFail({ where: { id: 1 } });
+  }
+
+  updateAppLastRequestedAt(): Promise<App> {
+    return this.appRepository.save({ id: 1, lastRequestedAt: new Date() });
   }
 }
