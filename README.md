@@ -1,4 +1,4 @@
-# shared-rentals
+# 🏡 Shared Rentals
 
 ## Структура проекта
 
@@ -18,5 +18,12 @@
 ### Backend
 
 - nodejs
+- typescript
 - [nestjs](https://nestjs.com/)
+- [typeorm](https://typeorm.io/)
 - [PostgreSQL](https://www.postgresql.org/)
+
+## Инструкции по разработке
+
+- [Frontend](./sr-front/README.md)
+- [Backend](./sr-back/README.md)

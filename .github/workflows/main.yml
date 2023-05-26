@@ -23,36 +23,6 @@ jobs:
           working-directory: sr-front
 
       - name: Install packages
-        with:
-          cache-dependency-path: "**/package-lock.json"
-          working-directory: sr-front
-        run: |
-          npm install
-
-      - name: Linters
-        run: npx lint-staged --diff="origin/${GITHUB_BASE_REF}...origin/${GITHUB_HEAD_REF}"
-
-  lint-back:
-    name: Lint Backend
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "npm"
-          cache-dependency-path: "**/package-lock.json"
-          working-directory: sr-back
-
-      - name: Install packages
-        with:
-          cache-dependency-path: "**/package-lock.json"
-          working-directory: sr-front
         run: |
           cd sr-front && npm install
 
