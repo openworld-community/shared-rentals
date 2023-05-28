@@ -1,4 +1,4 @@
-import { Column, PrimaryGeneratedColumn, Entity } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 // TODO: remove example entity
 @Entity()

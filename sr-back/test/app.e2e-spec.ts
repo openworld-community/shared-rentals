@@ -1,8 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-import { AppModule } from './../src/app.module';
+import { AppModule } from './../src/app/app.module';
 
+// TODO: fix this e2e test, it won't work as it lack of mocks for db and responses
 describe('AppController (e2e)', () => {
   let app: INestApplication;
 
@@ -15,8 +16,8 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  it('/ (GET)', () => {
-    return request(app.getHttpServer())
+  it('/status (GET)', async () => {
+    return await request(app.getHttpServer())
       .get('/')
       .expect(200)
       .expect('Hello World!');

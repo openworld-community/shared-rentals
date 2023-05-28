@@ -5,12 +5,19 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class AppService {
-  constructor(@InjectRepository(App) private appRepository: Repository<App>) {}
-  getApp(): Promise<App> {
-    return this.appRepository.findOneOrFail({ where: { id: 1 } });
+  constructor(
+    @InjectRepository(App) private readonly appRepository: Repository<App>,
+  ) {}
+
+  async getApp(): Promise<App> {
+    const a = 4;
+    return await this.appRepository.findOneOrFail({ where: { id: 1 } });
   }
 
-  updateAppLastRequestedAt(): Promise<App> {
-    return this.appRepository.save({ id: 1, lastRequestedAt: new Date() });
+  async updateAppLastRequestedAt(): Promise<App> {
+    return await this.appRepository.save({
+      id: 1,
+      lastRequestedAt: new Date(),
+    });
   }
 }
