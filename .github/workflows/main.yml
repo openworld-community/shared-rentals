@@ -5,8 +5,8 @@ on:
     branches:
       - main
 jobs:
-  lint-front:
-    name: Lint Frontend
+  lint-all:
+    name: Lint All
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout code
@@ -20,35 +20,18 @@ jobs:
           node-version: 18
           cache: "npm"
           cache-dependency-path: "**/package-lock.json"
-          working-directory: sr-front
 
-      - name: Install packages
+      - name: Install frontend packages
         run: |
-          cd sr-front && npm install
+          cd sr-front && npm install --no-fund
+
+      - name: Install backend packages
+        run: |
+          cd sr-back && npm install --no-fund
 
       - name: Linters
-        run: npx lint-staged --diff="origin/${GITHUB_BASE_REF}...origin/${GITHUB_HEAD_REF}"
-
-  lint-back:
-    name: Lint Backend
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "npm"
-          cache-dependency-path: "**/package-lock.json"
-          working-directory: sr-back
-
-      - name: Install packages
         run: |
-          cd sr-back && npm install
-
-      - name: Linters
-        run: npx lint-staged --diff="origin/${GITHUB_BASE_REF}...origin/${GITHUB_HEAD_REF}"
+          pushd sr-front && npm run lint
+          popd
+          pushd sr-back && npm run lint
+          popd
