@@ -1,0 +1,14 @@
+# Editor files and configs
+.idea
+.vscode
+.nlsp-settings
+
+# Ignore platform files
+Thumbs.db
+.DS_Store
+
+# Packages
+*/node_modules
+
+# Built apps
+*/dist
