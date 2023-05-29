@@ -7,12 +7,12 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get('/status')
-  getApp(): Promise<App> {
-    return this.appService.getApp();
+  async getApp(): Promise<App> {
+    return await this.appService.getApp();
   }
 
   @Put('/status')
-  setAppLastRequested(): Promise<App> {
-    return this.appService.updateAppLastRequestedAt();
+  async setAppLastRequested(): Promise<App> {
+    return await this.appService.updateAppLastRequestedAt();
   }
 }
