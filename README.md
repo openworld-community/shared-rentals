@@ -9,6 +9,8 @@
 
 ## Стек проекта
 
+API Документация - Swagger OpenApi ([NEST](https://nestjs.com/))
+
 ### Frontend
 
 - vite

@@ -17,12 +17,9 @@ services:
       context: ..
     ports:
       - "3000:3000"
-    environment:
-      APP_PORT: 3000
-      DB_HOST: db
-      DB_PORT: 5432
-      DB_USERNAME: postgres
-      DB_PASSWORD: postgres
+    env_file:
+      ../sr-back/.env
+      ../sr-back/.env.local
     depends_on:
       - db
       - migrations
