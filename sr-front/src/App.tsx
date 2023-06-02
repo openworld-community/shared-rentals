@@ -42,7 +42,7 @@ function App() {
           <big>🏠</big>
         </a>
       </div>
-      <h1>Shared Rentals</h1>
+      <h1 className="text-3xl font-bold">Shared Rentals</h1>
       <div className="card">
         <button onClick={() => makeRequest()}>Make Request!</button>
         <p>App info: {loading ? 'loading...' : JSON.stringify(appInfo)}</p>
