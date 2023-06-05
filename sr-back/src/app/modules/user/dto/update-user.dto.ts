@@ -1,7 +1,12 @@
-export interface UpdateUserInput {
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+
+export class UpdateUserInput {
+  @ApiPropertyOptional()
   email: string;
 
+  @ApiPropertyOptional()
   firstName: string;
 
+  @ApiPropertyOptional()
   lastName: string;
 }

@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Param, Put, Query } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { User } from 'src/app/entities';
 import { UpdateUserInput } from './dto';
@@ -9,6 +9,10 @@ import { UpdateUserInput } from './dto';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @ApiResponse({
+    type: User,
+    status: 200,
+  })
   @Put('/user/:id')
   async updateUser(
     @Param('id') id: number,
@@ -17,11 +21,20 @@ export class UserController {
     return await this.userService.updateUser(id, input);
   }
 
+  @ApiResponse({
+    type: User,
+    status: 200,
+  })
   @Get('/user/:id')
   async getUser(@Param('id') id: number): Promise<User | null> {
     return await this.userService.getUserById(id);
   }
 
+  // ToDo: brainstorm about pages type
+  @ApiResponse({
+    type: [User],
+    status: 200,
+  })
   @Get('/users')
   async getAllUsers(@Query('skip') skip: number, @Query('take') take: number) {
     return await this.userService.getUsers({

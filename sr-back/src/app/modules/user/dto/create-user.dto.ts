@@ -1,11 +1,16 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { UserRole } from 'src/app/entities';
 
-export interface CreateUserInput {
+export class CreateUserInput {
+  @ApiProperty()
   email: string;
 
+  @ApiProperty()
   firstName: string;
 
+  @ApiProperty()
   lastName: string;
 
+  @ApiProperty()
   role: UserRole;
 }
