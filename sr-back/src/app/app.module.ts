@@ -8,7 +8,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { App } from './entities/app.entity';
 import { logger } from 'src/middlewares/logger.middleware';
 import { CoreModule } from './modules/core.module';
-import { join } from 'path';
+import { User } from './entities';
 
 @Module({
   imports: [
@@ -22,7 +22,7 @@ import { join } from 'path';
         type: 'postgres',
         ...configService.get<ConfigType<typeof dbConfig>>('database'),
         // TODO: use autowire injector
-        entities: [join(__dirname, 'entities', '*.entity.{ts,js}')],
+        entities: [App, User],
         migrations: [],
       }),
     }),
