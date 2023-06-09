@@ -18,14 +18,16 @@ services:
     ports:
       - "3000:3000"
     env_file:
-      ../sr-back/.env
-      ../sr-back/.env.local
+      - ../sr-back/.env
+      - ../sr-back/.env.local
     depends_on:
       - db
       - migrations
 
   db:
     image: postgres:15-alpine
+    # uncomment to enable db query logging
+    # command: ["postgres", "-c", "log_statement=all"]
     restart: always
     environment:
       POSTGRES_USER: postgres
