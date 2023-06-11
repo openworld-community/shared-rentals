@@ -8,11 +8,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { App } from './entities/app.entity';
 import { logger } from 'src/middlewares/logger.middleware';
 import { CoreModule } from './modules/core.module';
-import { User } from './entities';
+import { AreaModule } from 'src/area/area.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
+      // First found variable takes precedence, so local env first
+      envFilePath: ['.env.local', '.env'],
       load: [appConfig, dbConfig],
     }),
     TypeOrmModule.forRootAsync({
@@ -21,13 +23,13 @@ import { User } from './entities';
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
         ...configService.get<ConfigType<typeof dbConfig>>('database'),
-        // TODO: use autowire injector
-        entities: [App, User],
+        autoLoadEntities: true,
         migrations: [],
       }),
     }),
     TypeOrmModule.forFeature([App]),
     CoreModule,
+    AreaModule,
   ],
   exports: [TypeOrmModule],
   controllers: [AppController],

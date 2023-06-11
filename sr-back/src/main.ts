@@ -3,6 +3,7 @@ import { AppModule } from './app/app.module';
 import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { NODE_ENVS } from 'config/utility';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -25,6 +26,7 @@ async function bootstrap() {
     origin: '*',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   });
+  app.useGlobalPipes(new ValidationPipe({ transform: true }));
   app.enableShutdownHooks();
   await app.listen(config.get<number>('application.port', { infer: true }));
 }
