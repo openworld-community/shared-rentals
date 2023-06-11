@@ -7,10 +7,9 @@ import {
   Put,
   NotFoundException,
 } from '@nestjs/common';
-import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { ApiTags } from '@nestjs/swagger';
 import { ApiException } from '@nanogiants/nestjs-swagger-api-exception-decorator';
 import { UserService } from './user.service';
-import { User } from './entities/user.entity';
 import { UpdateUserInput } from './dto';
 import { PageOptionsDTO } from 'src/common/dto/pagination.dto';
 import {
