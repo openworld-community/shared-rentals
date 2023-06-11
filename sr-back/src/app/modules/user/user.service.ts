@@ -1,9 +1,18 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from 'src/app/entities';
-import { Repository } from 'typeorm';
+import { User, UserRole } from 'src/app/entities';
+import { EntityNotFoundError, Repository } from 'typeorm';
 import { PageParams } from '../common';
 import { CreateUserInput, UpdateUserInput } from './dto';
+import { Injectable } from '@nestjs/common';
+import {
+  PageMetaDTO,
+  PageOptionsDTO,
+  ResponseWithPagination,
+} from 'src/common/dto/pagination.dto';
 
+export class UserNotFoundError extends Error {}
+
+@Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
@@ -24,29 +33,54 @@ export class UserService {
     return newlyCreatedUser;
   }
 
-  async updateUser(id: number, input: UpdateUserInput): Promise<User | null> {
-    const existingUser = await this.userRepository.findOneBy({
-      id,
-    });
+  async updateUser(id: number, input: UpdateUserInput): Promise<User> {
+    try {
+      const existingUser = await this.userRepository.findOneOrFail({
+        where: { id },
+      });
 
-    if (existingUser === null) {
-      throw new Error(`User not found`);
+      return await this.userRepository.save({
+        id: existingUser.id,
+        ...input,
+      });
+    } catch (error) {
+      if (error instanceof EntityNotFoundError) {
+        throw new UserNotFoundError();
+      }
+
+      throw error;
     }
-
-    return await this.userRepository.save({
-      id: existingUser.id,
-      ...input,
-    });
   }
 
-  async getUserById(id: number): Promise<User | null> {
-    return await this.userRepository.findOneBy({ id });
+  async getUserById(id: number): Promise<User> {
+    try {
+      return await this.userRepository.findOneOrFail({
+        where: { id },
+      });
+    } catch (error) {
+      if (error instanceof EntityNotFoundError) {
+        throw new UserNotFoundError();
+      }
+
+      throw error;
+    }
   }
 
-  async getUsers(pageParams: PageParams): Promise<[User[], number] | []> {
-    return await this.userRepository.findAndCount({
-      skip: pageParams.skip,
-      take: pageParams.take,
+  async getUsers({
+    pageOptions,
+  }: {
+    pageOptions: PageOptionsDTO;
+  }): Promise<ResponseWithPagination<User>> {
+    const searchOptions = { role: UserRole.user };
+    const itemsTotal = await this.userRepository.count({
+      where: searchOptions,
     });
+    const data = await this.userRepository.find({
+      where: searchOptions,
+      take: pageOptions.take,
+      skip: pageOptions.skip,
+    });
+
+    return { data, meta: new PageMetaDTO(itemsTotal, pageOptions) };
   }
 }
