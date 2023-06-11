@@ -7,6 +7,8 @@ export enum UserRole {
   admin = 'admin',
 }
 
+export const UserRolePG = Object.keys(UserRole);
+
 @Entity()
 export class User {
   @ApiProperty()
@@ -28,7 +30,7 @@ export class User {
   email: string;
 
   @ApiProperty()
-  @Column({ enum: UserRole })
+  @Column({ enum: UserRolePG })
   role: UserRole;
 
   @ApiProperty()
