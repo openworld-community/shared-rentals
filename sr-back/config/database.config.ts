@@ -7,5 +7,6 @@ export default registerAs('database', () => ({
   database: 'shared_rentals',
   username: setEnvVar('DB_USERNAME', 'postgres'),
   password: setEnvVar('DB_PASSWORD', 'postgres'),
-  synchronize: process.env.NODE_ENV !== NODE_ENVS.production,
+  logging: process.env.NODE_ENV !== NODE_ENVS.production,
+  synchronize: false,
 }));
