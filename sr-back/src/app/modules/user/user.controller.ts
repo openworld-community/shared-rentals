@@ -24,9 +24,6 @@ import { SingleUserDTO, UsersDTO } from './dto/user.dto';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @ApiOkResponse({
-    type: User,
-  })
   @Put('/user/:id')
   @SerializeTo(SingleUserDTO)
   @ApiException(() => NotFoundException)
@@ -34,9 +31,6 @@ export class UserController {
     return await this.userService.updateUser(id, input);
   }
 
-  @ApiOkResponse({
-    type: User,
-  })
   @Get('/user/:id')
   @SerializeTo(SingleUserDTO)
   @ApiException(() => NotFoundException)
@@ -44,9 +38,6 @@ export class UserController {
     return await this.userService.getUserById(id);
   }
 
-  @ApiOkResponse({
-    type: [User],
-  })
   @SerializeWithPagingTo(UsersDTO)
   @Get('/users')
   async getAllUsers(@Query() pageOptions: PageOptionsDTO) {

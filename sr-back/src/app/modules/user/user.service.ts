@@ -10,6 +10,7 @@ import {
 } from 'src/common/dto/pagination.dto';
 
 export class UserNotFoundError extends Error {}
+export class UserViaEmailAlreadyExists extends Error {}
 
 @Injectable()
 export class UserService {
@@ -19,15 +20,15 @@ export class UserService {
 
   // It will be changed after PEREDELANO PASSPORt integration
   async createUser(input: CreateUserInput): Promise<User | null> {
-    const existingUser = await this.userRepository.findOneBy({
-      email: input.email,
+    const existingUser = await this.userRepository.exist({
+      where: { email: input.email },
     });
 
-    if (existingUser !== null) {
-      throw new Error(`User via ${input.email} email already exists`);
+    if (existingUser) {
+      throw new UserViaEmailAlreadyExists();
     }
 
-    const newlyCreatedUser = await this.userRepository.save(input);
+    const newlyCreatedUser = (await this.userRepository.insert(input)).raw[0];
 
     return newlyCreatedUser;
   }
@@ -38,10 +39,8 @@ export class UserService {
         where: { id },
       });
 
-      return await this.userRepository.save({
-        id: existingUser.id,
-        ...input,
-      });
+      return (await this.userRepository.update({ id: existingUser.id }, input))
+        .raw[0];
     } catch (error) {
       if (error instanceof EntityNotFoundError) {
         throw new UserNotFoundError();
