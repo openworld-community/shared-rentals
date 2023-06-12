@@ -16,12 +16,12 @@ export class LocalAuthGuard extends AuthGuard('local') implements IAuthGuard {
 
 @Injectable()
 export class IsAuthenticatedGuard implements CanActivate {
-  constructor(private readonly role: UserRole) {}
+  constructor(private readonly roles: UserRole[]) {}
 
   async canActivate(context: ExecutionContext) {
     const request: Request = context.switchToHttp().getRequest();
     // eslint-disable-next-line @typescript-eslint/await-thenable
     const user = (await request.user) as User;
-    return request.isAuthenticated() && user.role === this.role;
+    return request.isAuthenticated() && this.roles.includes(user.role);
   }
 }

@@ -21,7 +21,9 @@ import { SerializeTo } from '@common/decorators/SerializeTo';
 import { WithUser } from '@common/decorators/WithUser';
 import { UserDTO } from '@modules/user/dto';
 import { LocalAuthGuard } from './auth.guard';
-import { User, UserRole } from '@modules/user/entities/user.entity';
+import { User } from '@modules/user/entities/user.entity';
+import { AuthResultDTO } from './dto/auth-result.dto';
+import { MustBe, NOT_ANONOMOUS } from '@common/decorators/MustBe';
 
 @Controller('auth')
 @ApiTags('Auth')
@@ -49,7 +51,7 @@ export class AuthController {
     return user;
   }
 
-  @MustBe(UserRole.user)
+  @MustBe(NOT_ANONOMOUS)
   @Post('logout')
   async logout(@Req() req: any) {
     req.session.destroy();
