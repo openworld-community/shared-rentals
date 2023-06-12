@@ -9,11 +9,14 @@ import { PageDTO, ResponseWithPagination } from 'src/common/dto/pagination.dto';
 
 @Injectable()
 export class SerializerInterceptor implements NestInterceptor {
-  constructor(private readonly dto: any) {}
+  constructor(private readonly dto?: any) {}
 
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     return next.handle().pipe(
       map((data) => {
+        if (this.dto === undefined) {
+          return data;
+        }
         return this.dto.fromEntity(data);
       }),
     );

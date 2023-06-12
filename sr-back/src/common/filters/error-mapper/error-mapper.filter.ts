@@ -29,6 +29,7 @@ export class ErrorMapperFilter implements ExceptionFilter {
       response.status(exception.getStatus()).json(exception.getResponse());
     } else {
       this.logger.error(exception);
+      console.log(exception);
       const e = new InternalServerErrorException();
       response.status(e.getStatus()).json(e.getResponse());
     }
