@@ -1,23 +1,23 @@
 import { Expose } from 'class-transformer';
-import { User, UserRole } from '../entities/user.entity';
+import { UserRole } from '../entities/user.entity';
+import { IsEmail, IsEnum, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateUserInput {
   @Expose()
+  @IsEmail()
   email: string;
 
   @Expose()
+  @IsNotEmpty()
+  @IsString()
   firstName: string;
 
   @Expose()
+  @IsNotEmpty()
+  @IsString()
   lastName: string;
 
   @Expose()
+  @IsEnum(UserRole)
   role: UserRole;
-
-  constructor(user: User) {
-    this.email = user.email;
-    this.firstName = user.firstName;
-    this.lastName = user.lastName;
-    this.role = user.role;
-  }
 }
