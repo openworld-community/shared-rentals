@@ -8,6 +8,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { App } from './entities/app.entity';
 import { logger } from 'src/middlewares/logger.middleware';
 import { AreaModule } from 'src/area/area.module';
+import { CoreModule } from './modules/core.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { AreaModule } from 'src/area/area.module';
       }),
     }),
     TypeOrmModule.forFeature([App]),
+    CoreModule,
     AreaModule,
   ],
   exports: [TypeOrmModule],
