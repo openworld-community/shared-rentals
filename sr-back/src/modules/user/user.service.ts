@@ -2,12 +2,13 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User, UserRole } from './entities/user.entity';
 import { EntityNotFoundError, Repository } from 'typeorm';
-import { CreateUserInput, UpdateUserInput } from './dto';
+import { UpdateUserInput } from './dto';
 import {
   PageMetaDTO,
   PageOptionsDTO,
   ResponseWithPagination,
 } from 'src/common/dto/pagination.dto';
+import { RegisterDTO } from 'src/auth/dto/auth.dto';
 
 export class UserNotFoundError extends Error {}
 export class UserViaEmailAlreadyExists extends Error {}
@@ -19,18 +20,19 @@ export class UserService {
   ) {}
 
   // It will be changed after PEREDELANO PASSPORt integration
-  async createUser(input: CreateUserInput): Promise<User | null> {
-    const existingUser = await this.userRepository.exist({
-      where: { email: input.email },
+  async createUser(newUserDto: RegisterDTO): Promise<User | never> {
+    const userExists = await this.userRepository.exist({
+      where: { email: newUserDto.email },
     });
 
-    if (existingUser) {
+    if (userExists) {
       throw new UserViaEmailAlreadyExists();
     }
+    const user = await this.userRepository.insert({
+      ...newUserDto,
+    });
 
-    const newlyCreatedUser = (await this.userRepository.insert(input)).raw[0];
-
-    return newlyCreatedUser;
+    return user.raw[0];
   }
 
   async updateUser(id: number, input: UpdateUserInput): Promise<User> {
@@ -64,6 +66,20 @@ export class UserService {
     }
   }
 
+  async getUserByEmail(email: string): Promise<User> {
+    try {
+      return await this.userRepository.findOneOrFail({
+        where: { email },
+      });
+    } catch (error) {
+      if (error instanceof EntityNotFoundError) {
+        throw new UserNotFoundError();
+      }
+
+      throw error;
+    }
+  }
+
   async getUsers({
     pageOptions,
   }: {
@@ -80,5 +96,9 @@ export class UserService {
     });
 
     return { data, meta: new PageMetaDTO(itemsTotal, pageOptions) };
+  }
+
+  async updateLastLogin(userId: number) {
+    await this.userRepository.update(userId, { lastLogin: new Date() });
   }
 }
