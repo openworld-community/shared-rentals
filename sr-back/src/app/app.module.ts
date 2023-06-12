@@ -6,16 +6,18 @@ import dbConfig from '@config/database.config';
 import appConfig from '@config/application.config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { App } from './entities/app.entity';
-import { logger } from 'src/middlewares/logger.middleware';
-import { AreaModule } from 'src/area/area.module';
-import { CoreModule } from './modules/core.module';
+import { logger } from '@common/middlewares/logger.middleware';
+import authConfig from 'config/auth.config';
+import { AuthModule } from 'src/auth/auth.module';
+import redisConfig from '@config/redis.config';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       // First found variable takes precedence, so local env first
       envFilePath: ['.env.local', '.env'],
-      load: [appConfig, dbConfig],
+      load: [appConfig, dbConfig, authConfig, redisConfig],
+      isGlobal: true,
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -28,8 +30,7 @@ import { CoreModule } from './modules/core.module';
       }),
     }),
     TypeOrmModule.forFeature([App]),
-    CoreModule,
-    AreaModule,
+    AuthModule,
   ],
   exports: [TypeOrmModule],
   controllers: [AppController],
