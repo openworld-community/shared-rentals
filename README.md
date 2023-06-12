@@ -16,6 +16,8 @@ API Документация - Swagger OpenApi ([NEST](https://nestjs.com/))
 - vite
 - typescript
 - react
+- tailwind
+- rtk query
 
 ### Backend
 
