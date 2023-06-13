@@ -1,19 +1,6 @@
-import { Expose } from 'class-transformer';
-import { User } from '../entities/user.entity';
+import { OmitType, PartialType } from '@nestjs/swagger';
+import { CreateUserInput } from './create-user.dto';
 
-export class UpdateUserInput {
-  @Expose()
-  email: string;
-
-  @Expose()
-  firstName: string;
-
-  @Expose()
-  lastName: string;
-
-  constructor(user: User) {
-    this.email = user.email;
-    this.firstName = user.firstName;
-    this.lastName = user.lastName;
-  }
-}
+export class UpdateUserInput extends PartialType(
+  OmitType(CreateUserInput, ['role'] as const),
+) {}

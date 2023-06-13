@@ -8,8 +8,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { ApiException } from '@nanogiants/nestjs-swagger-api-exception-decorator';
-import { UserService } from './user.service';
+import { UserNotFoundError, UserService } from './user.service';
 import { UpdateUserInput } from './dto';
 import { PageOptionsDTO } from 'src/common/dto/pagination.dto';
 import {
@@ -17,6 +16,7 @@ import {
   SerializeWithPagingTo,
 } from 'src/common/decorators/SerializeTo';
 import { SingleUserDTO, UsersDTO } from './dto/user.dto';
+import { MapErrorToHTTP } from 'src/common/decorators/MapErrorToHTTP';
 
 @Controller()
 @ApiTags('User')
@@ -25,14 +25,14 @@ export class UserController {
 
   @Put('/user/:id')
   @SerializeTo(SingleUserDTO)
-  @ApiException(() => NotFoundException)
+  @MapErrorToHTTP(UserNotFoundError, NotFoundException)
   async updateUser(@Param('id') id: number, @Body() input: UpdateUserInput) {
     return await this.userService.updateUser(id, input);
   }
 
   @Get('/user/:id')
   @SerializeTo(SingleUserDTO)
-  @ApiException(() => NotFoundException)
+  @MapErrorToHTTP(UserNotFoundError, NotFoundException)
   async getUser(@Param('id') id: number) {
     return await this.userService.getUserById(id);
   }

@@ -7,13 +7,13 @@ import {
 } from '@nestjs/common';
 import { AreaNotFoundError, AreaService } from './area.service';
 import { ApiTags } from '@nestjs/swagger';
-import { ApiException } from '@nanogiants/nestjs-swagger-api-exception-decorator';
 import { AreaTreeDTO, SingleAreaDTO } from './dto/area.dto';
 import {
   SerializeTo,
   SerializeWithPagingTo,
 } from 'src/common/decorators/SerializeTo';
 import { PageOptionsDTO } from 'src/common/dto/pagination.dto';
+import { MapErrorToHTTP } from 'src/common/decorators/MapErrorToHTTP';
 
 @ApiTags('Areas')
 @Controller('areas')
@@ -31,14 +31,8 @@ export class AreaController {
 
   @Get(':areaId')
   @SerializeTo(SingleAreaDTO)
-  @ApiException(() => NotFoundException)
+  @MapErrorToHTTP(AreaNotFoundError, NotFoundException)
   async findOne(@Param('areaId') id: string) {
-    try {
-      return await this.areaService.findOne(+id);
-    } catch (error) {
-      if (error instanceof AreaNotFoundError) {
-        throw new NotFoundException();
-      }
-    }
+    return await this.areaService.findOne(+id);
   }
 }
