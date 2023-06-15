@@ -4,9 +4,16 @@
 
 ### Запуск API и базы
 
+Перед запуском необходимо создать файл окружения `sr-back/.env.local` со следующим содержимым
+
+```.env
+NODE_ENV=dev
+```
+
+После этого можно запустить контейнеры с бекендом командой:
+
 ```bash
-# Запуск контейнера с API и базой данных
-$ docker compose -f docker/docker-compose.yaml up db api --remove-orphans
+$ docker compose -f docker/docker-compose.yaml up migrations db api --remove-orphans
 ```
 
 Запуск бекенда без контейнера: см. [README бекенда](../sr-back/README.md)
@@ -27,3 +34,5 @@ _TODO_
 ### Полезные ресурсы
 
 ### Документация компонент
+
+### Тестирование

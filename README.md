@@ -9,13 +9,13 @@
 
 ## Стек проекта
 
-API Документация - Swagger OpenApi ([NEST](https://nestjs.com/))
-
 ### Frontend
 
 - vite
 - typescript
 - react
+- tailwind
+- rtk query
 
 ### Backend
 
@@ -29,3 +29,9 @@ API Документация - Swagger OpenApi ([NEST](https://nestjs.com/))
 
 - [Frontend](./sr-front/README.md)
 - [Backend](./sr-back/README.md)
+
+## Документация API
+
+Доступна через Swagger UI: [http://localhost:3000/api](http://localhost:3000/api)
+
+Для доступа необходимо запустить бекенд и базу командой из инструкции: [sr-front/README.md](sr-front/README.md)

@@ -10,7 +10,6 @@ export class AppService {
   ) {}
 
   async getApp(): Promise<App> {
-    const a = 4;
     return await this.appRepository.findOneOrFail({ where: { id: 1 } });
   }
 
