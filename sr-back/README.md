@@ -92,3 +92,27 @@ $ typeorm -d ormconfig.ts migration:generate
 - [TypeORM](https://typeorm.io/)
 - [PostgreSQL](https://www.postgresql.org/)
 - [TypeScript](https://www.typescriptlang.org/)
+
+### Тестирование
+
+Подразумевает, что необходимые сервисы запускаются как docker-контейнеры, и существует файл `sr-bask/.env.local` со следующим содержимым:
+
+```env
+NODE_ENV=dev
+```
+
+Шорт-лист проверок:
+
+- бекенд собирается в docker-контейнере
+
+```bash
+docker compose -f docker/docker-compose.yaml up db api migrations --remove-orphans --build
+```
+
+- контейнер с миграциями завершает работу со статус-кодом `0`
+
+```bash
+docker-migrations-1 exited with code 0
+```
+
+- Swagger UI доступен по адресу [http://localhost:3000/api](http://localhost:3000/api)
