@@ -2,10 +2,10 @@ FROM node:18-alpine as building
 
 WORKDIR /app
 
-COPY sr-front/package*.json /app
+COPY sr-front/package*.json ./
 RUN npm install --no-audit --no-fund
 
-COPY ./sr-front /app
+COPY ./sr-front ./
 
 RUN npm run build
 RUN rm -rf /app/node_modules && npm cache clean --force
