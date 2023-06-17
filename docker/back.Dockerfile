@@ -3,10 +3,10 @@ FROM node:18-alpine as building
 WORKDIR /build
 
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
-COPY ./sr-back/package*.json /build
+COPY ./sr-back/package*.json ./
 RUN npm install --omit=dev --no-audit --no-fund
 
-COPY ./sr-back /build
+COPY ./sr-back ./
 RUN npm run build
 
 FROM node:18-alpine as migration
