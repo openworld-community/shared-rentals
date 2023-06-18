@@ -1,6 +1,6 @@
 import { Expose } from 'class-transformer';
-import { UserRole } from '../entities/user.entity';
 import { IsEmail, IsEnum, IsNotEmpty, IsString } from 'class-validator';
+import { UserRole } from '@modules/user/entities/user.entity';
 
 export class CreateUserInput {
   @Expose()
@@ -10,12 +10,7 @@ export class CreateUserInput {
   @Expose()
   @IsNotEmpty()
   @IsString()
-  firstName: string;
-
-  @Expose()
-  @IsNotEmpty()
-  @IsString()
-  lastName: string;
+  name: string;
 
   @Expose()
   @IsEnum(UserRole)

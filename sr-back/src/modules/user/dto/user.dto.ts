@@ -6,10 +6,7 @@ export class UserDTO {
   id: number;
 
   @Expose()
-  firstName: string;
-
-  @Expose()
-  lastName: string;
+  name: string;
 
   @Expose()
   email: string;
@@ -20,8 +17,7 @@ export class UserDTO {
   constructor(user: User) {
     console.log(user);
     this.id = user.id;
-    this.firstName = user.firstName;
-    this.lastName = user.lastName;
+    this.name = user.name;
     this.role = user.role;
     this.email = user.email;
   }
@@ -38,6 +34,7 @@ export class SingleUserDTO {
   user: UserDTO;
 
   static fromEntity(user: User) {
+    console.log(user);
     return { user: new UserDTO(user) };
   }
 }
