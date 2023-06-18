@@ -24,9 +24,12 @@ FROM node:18-alpine as production
 
 WORKDIR /
 
+RUN apk --no-cache add curl
+
 COPY --from=building ./build/dist/src/ /app
 COPY --from=building ./build/dist/config /config
 COPY --from=building ./build/node_modules /node_modules
 
+HEALTHCHECK --interval=3s --timeout=3s --start-period=1s --retries=3 CMD curl -f http://localhost:3000/status || exit 1
 EXPOSE 3000
 CMD node app/main
