@@ -1,6 +1,6 @@
 import React from 'react';
 import './LoginContainer.css';
-import { Button } from "../Button/Button";
+import { Button } from '../Button/Button';
 
 export const LoginContainer = () => {
   return (
@@ -82,7 +82,9 @@ export const LoginContainer = () => {
           Нужна помощь?
         </div>
         <div className="text-xs py-8 font-light">
-          Продолжая, вы принимаете условия <span className="underline">Пользовательского соглашения</span> и <span className="underline">Политики конфиденциальности</span>
+          Продолжая, вы принимаете условия{' '}
+          <span className="underline">Пользовательского соглашения</span> и{' '}
+          <span className="underline">Политики конфиденциальности</span>
         </div>
       </div>
     </div>
