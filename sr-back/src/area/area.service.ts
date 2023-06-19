@@ -31,6 +31,21 @@ export class AreaService {
     }
   }
 
+  async areaExists(id: number) {
+    try {
+      return await this.areaRepository.exist({
+        where: { id },
+        relations: { parent: true, child: true },
+      });
+    } catch (error) {
+      if (error instanceof EntityNotFoundError) {
+        throw new AreaNotFoundError();
+      }
+
+      throw error;
+    }
+  }
+
   async findAllCountries({
     withCities = false,
     pageOptions,

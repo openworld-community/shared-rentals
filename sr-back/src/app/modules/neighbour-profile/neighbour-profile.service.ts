@@ -63,19 +63,18 @@ export class NeighbourProfileService {
           },
         });
 
-      let country = existingProfile.country;
       if (countryId !== null && countryId !== undefined) {
-        country = await this.areaService.findOne(countryId);
+        await this.areaService.areaExists(countryId);
       }
-      let city = existingProfile.city;
+
       if (cityId !== null && cityId !== undefined) {
-        city = await this.areaService.findOne(cityId);
+        await this.areaService.areaExists(cityId);
       }
 
       return (
         await this.neighbourProfileRepository.update(
           { id: existingProfile.id },
-          { ...body, country, city },
+          { ...body },
         )
       ).raw[0] as NeighbourProfile;
     } catch (error) {
