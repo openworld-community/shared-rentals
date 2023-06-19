@@ -1,7 +1,6 @@
 import { Expose } from 'class-transformer';
 import {
   IsBoolean,
-  IsEmail,
   IsEnum,
   IsInt,
   IsNotEmpty,

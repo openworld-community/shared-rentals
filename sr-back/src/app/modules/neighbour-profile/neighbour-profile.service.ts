@@ -5,7 +5,6 @@ import { User } from '../user/entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, EntityNotFoundError } from 'typeorm';
 import { NeighbourProfile } from './entities/neighbour-profile.entity';
-import { Area } from 'src/area/entities/area.entity';
 import { AreaService } from 'src/area/area.service';
 import {
   PageMetaDTO,
