@@ -9,6 +9,7 @@ import {
 } from 'typeorm';
 import { User } from '../../user/entities/user.entity';
 import { Area } from 'src/area/entities/area.entity';
+import { ValidateIf } from 'class-validator';
 
 export enum Gender {
   man = 'man',
@@ -51,11 +52,15 @@ export class NeighbourProfile {
   @Column()
   petsDescription: string;
 
+  @Column({ nullable: true })
   @OneToOne(() => Area)
   @JoinColumn()
+  @ValidateIf((u) => u.city)
   country: Area;
 
+  @Column({ nullable: true })
   @OneToOne(() => Area)
+  @ValidateIf((u) => u.country)
   @JoinColumn()
   city: Area;
 

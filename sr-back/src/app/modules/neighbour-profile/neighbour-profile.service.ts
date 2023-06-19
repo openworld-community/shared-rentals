@@ -90,10 +90,13 @@ export class NeighbourProfileService {
     return (await this.neighbourProfileRepository.delete({ user })).affected;
   }
 
-  async getNeighbourProfile(id: number): Promise<NeighbourProfile | never> {
+  async getNeighbourProfileByUserId(
+    id: number,
+  ): Promise<NeighbourProfile | never> {
     try {
       return await this.neighbourProfileRepository.findOneOrFail({
         where: { id },
+        relations: { user: true },
       });
     } catch (error) {
       if (error instanceof EntityNotFoundError) {
