@@ -1,0 +1,21 @@
+.header {
+  padding: 16px;
+  border-bottom: 1px #E7E7E7 solid;
+}
+
+.footer {
+  padding-top: 22px;
+  padding-bottom: 56px;
+}
+
+.footer__text {
+  font-size: 12px;
+  line-height: 14px;
+  color: var(--color-secondary);
+}
+
+.footer__bottom {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+}
