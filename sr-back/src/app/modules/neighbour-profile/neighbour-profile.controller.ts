@@ -17,8 +17,7 @@ import {
   NeighbourProfileNotFound,
   NeighbourProfileService,
 } from './neighbour-profile.service';
-import { User, UserRole } from '../user/entities/user.entity';
-import { MustBe } from '@common/decorators/MustBe';
+import { User } from '../user/entities/user.entity';
 import { Request } from 'express';
 import { CreateNeighbourProfileInput } from './dto/create-neighbour-profile.dto';
 import { UpdateNeighbourProfileInput } from './dto/update-neighbour-profile.dto';
@@ -40,7 +39,6 @@ export class NeighbourProfileController {
   @Inject()
   private readonly neighbourProfileService: NeighbourProfileService;
 
-  @MustBe(UserRole.user)
   @Get(':id')
   @SerializeTo(SingleNeighbourProfileDTO)
   @MapErrorToHTTP(NeighbourProfileNotFound, UnauthorizedException)
@@ -48,14 +46,12 @@ export class NeighbourProfileController {
     return await this.neighbourProfileService.getNeighbourProfile(id);
   }
 
-  @MustBe(UserRole.user)
   @Get('all')
   @SerializeWithPagingTo(NeighbourProfilesDTO)
   async getAllNeighbourProfiles(@Query() pageOptions: PageOptionsDTO) {
     return await this.neighbourProfileService.getNeighbourProfiles(pageOptions);
   }
 
-  @MustBe(UserRole.user)
   @Post()
   @MapErrorToHTTP(AreaNotFoundError, UnauthorizedException)
   @MapErrorToHTTP(NeighbourProfileAlreadyExists, UnauthorizedException)
@@ -71,7 +67,6 @@ export class NeighbourProfileController {
     return res;
   }
 
-  @MustBe(UserRole.user)
   @Put()
   @MapErrorToHTTP(NeighbourProfileNotFound, UnauthorizedException)
   async updateNeighbourProfile(
@@ -86,7 +81,6 @@ export class NeighbourProfileController {
     return res;
   }
 
-  @MustBe(UserRole.user)
   @Delete()
   async deleteNeighbourProfile(@Req() { user }: Request) {
     const res = await this.neighbourProfileService.deleteNeighbourProfile(
