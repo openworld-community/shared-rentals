@@ -55,12 +55,12 @@ export class NeighbourProfile {
   @Column({ nullable: true })
   @OneToOne(() => Area)
   @JoinColumn()
-  @ValidateIf((u) => u.city)
+  @ValidateIf((u) => (u.country === undefined || u.country === null) && u.city)
   country: Area;
 
   @Column({ nullable: true })
   @OneToOne(() => Area)
-  @ValidateIf((u) => u.country)
+  @ValidateIf((u) => (u.city === undefined || u.city === null) && u.country)
   @JoinColumn()
   city: Area;
 

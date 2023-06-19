@@ -43,7 +43,7 @@ export class NeighbourProfileController {
   @SerializeTo(SingleNeighbourProfileDTO)
   @MapErrorToHTTP(NeighbourProfileNotFound, UnauthorizedException)
   async getNeighbourProfile(@Param('id') id: number) {
-    return await this.neighbourProfileService.getNeighbourProfile(id);
+    return await this.neighbourProfileService.getNeighbourProfileByUserId(id);
   }
 
   @Get('all')
