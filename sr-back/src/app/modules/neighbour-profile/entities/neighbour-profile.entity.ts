@@ -1,9 +1,11 @@
 import {
   Column,
+  CreateDateColumn,
   Entity,
   JoinColumn,
   OneToOne,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { User } from '../../user/entities/user.entity';
 import { Area } from 'src/area/entities/area.entity';
@@ -69,9 +71,9 @@ export class NeighbourProfile {
   @Column()
   photoLink: string;
 
-  @Column({ default: 'now()', select: false })
+  @CreateDateColumn()
   createdAt: Date;
 
-  @Column({ default: 'now()', select: false })
+  @UpdateDateColumn()
   updatedAt: Date;
 }
