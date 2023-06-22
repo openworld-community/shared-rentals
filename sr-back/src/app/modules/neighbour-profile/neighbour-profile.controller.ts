@@ -42,8 +42,10 @@ export class NeighbourProfileController {
   @Get(':id')
   @SerializeTo(SingleNeighbourProfileDTO)
   @MapErrorToHTTP(NeighbourProfileNotFound, UnauthorizedException)
-  async getNeighbourProfile(@Param('id') id: number) {
-    return await this.neighbourProfileService.getNeighbourProfileByUserId(id);
+  async getNeighbourProfile(@Param('id') userId: number) {
+    return await this.neighbourProfileService.getNeighbourProfileByUserId(
+      userId,
+    );
   }
 
   @Get('all')
@@ -52,40 +54,43 @@ export class NeighbourProfileController {
     return await this.neighbourProfileService.getNeighbourProfiles(pageOptions);
   }
 
-  @Post()
+  @Post('/:id')
   @MapErrorToHTTP(AreaNotFoundError, UnauthorizedException)
   @MapErrorToHTTP(NeighbourProfileAlreadyExists, UnauthorizedException)
   async createNeighbourProfile(
     @Body() createNeighbourProfile: CreateNeighbourProfileInput,
-    @Req() { user }: Request,
+    // @Req() { user }: Request,
+    @Param('id') id: number,
   ) {
     const res = await this.neighbourProfileService.createNeighbourProfile(
       createNeighbourProfile,
-      user as User,
+      id,
     );
 
     return res;
   }
 
-  @Put()
+  @Put('/:id')
   @MapErrorToHTTP(NeighbourProfileNotFound, UnauthorizedException)
   async updateNeighbourProfile(
     @Body() updateNeighbourProfile: UpdateNeighbourProfileInput,
-    @Req() { user }: Request,
+    // @Req() { user }: Request,
+    @Param('id') id: number,
   ) {
     const res = await this.neighbourProfileService.updateNeighbourProfile(
       updateNeighbourProfile,
-      user as User,
+      id,
     );
 
     return res;
   }
 
-  @Delete()
-  async deleteNeighbourProfile(@Req() { user }: Request) {
-    const res = await this.neighbourProfileService.deleteNeighbourProfile(
-      user as User,
-    );
+  @Delete('/:id')
+  async deleteNeighbourProfile(
+    // @Req() { user }: Request,
+    @Param('id') id: number,
+  ) {
+    const res = await this.neighbourProfileService.deleteNeighbourProfile(id);
 
     return res;
   }

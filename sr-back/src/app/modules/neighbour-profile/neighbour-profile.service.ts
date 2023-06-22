@@ -11,6 +11,8 @@ import {
   PageOptionsDTO,
   ResponseWithPagination,
 } from 'src/common/dto/pagination.dto';
+import { UserService } from '../user/user.service';
+import { Area } from 'src/area/entities/area.entity';
 
 export class NeighbourProfileAlreadyExists extends Error {}
 export class NeighbourProfileNotFound extends Error {}
@@ -21,13 +23,17 @@ export class NeighbourProfileService {
     @InjectRepository(User)
     private readonly neighbourProfileRepository: Repository<NeighbourProfile>,
     private readonly areaService: AreaService,
+    private readonly userService: UserService,
   ) {}
 
   async createNeighbourProfile(
     body: CreateNeighbourProfileInput,
-    user: User,
+    // user: User,
+    id: number,
   ): Promise<NeighbourProfile | undefined> {
     const { countryId, cityId }: CreateNeighbourProfileInput = body;
+
+    const user = await this.userService.getUserById(id);
 
     const profileExists = await this.neighbourProfileRepository.exist({
       where: {
@@ -52,9 +58,15 @@ export class NeighbourProfileService {
     return neighbourProfile.raw[0] as NeighbourProfile;
   }
 
-  async updateNeighbourProfile(body: UpdateNeighbourProfileInput, user: User) {
+  async updateNeighbourProfile(
+    body: UpdateNeighbourProfileInput,
+    // user: User,
+    id: number,
+  ) {
     try {
-      const { countryId, cityId }: UpdateNeighbourProfileInput = body;
+      let { countryId, cityId }: UpdateNeighbourProfileInput = body;
+
+      const user = await this.userService.getUserById(id);
 
       const existingProfile =
         await this.neighbourProfileRepository.findOneOrFail({
@@ -63,12 +75,23 @@ export class NeighbourProfileService {
           },
         });
 
-      if (countryId !== null && countryId !== undefined) {
-        await this.areaService.areaExists(countryId);
+      let isCityOrCountryChecked = false;
+
+      if (cityId !== null && cityId !== undefined && !isCityOrCountryChecked) {
+        const city = await this.areaService.findOne(cityId);
+        if (city.parent !== null && Boolean(city.parent.id)) {
+          await this.areaService.areaExists(city.parent.id);
+        }
+        isCityOrCountryChecked = true;
       }
 
-      if (cityId !== null && cityId !== undefined) {
-        await this.areaService.areaExists(cityId);
+      if (
+        countryId !== null &&
+        countryId !== undefined &&
+        !isCityOrCountryChecked
+      ) {
+        await this.areaService.areaExists(countryId);
+        cityId = undefined;
       }
 
       return (
@@ -86,7 +109,8 @@ export class NeighbourProfileService {
     }
   }
 
-  async deleteNeighbourProfile(user: User): Promise<number | undefined | null> {
+  async deleteNeighbourProfile(id: number): Promise<number | undefined | null> {
+    const user = await this.userService.getUserById(id);
     return (await this.neighbourProfileRepository.delete({ user })).affected;
   }
 
