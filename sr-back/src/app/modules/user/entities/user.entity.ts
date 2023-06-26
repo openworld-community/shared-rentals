@@ -1,4 +1,10 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 export enum UserRole {
   user = 'user',
@@ -25,9 +31,9 @@ export class User {
   @Column({ enum: UserRole, type: 'enum', default: UserRole.user })
   role: UserRole;
 
-  @Column({ default: 'now()', select: false })
+  @CreateDateColumn()
   createdAt: Date;
 
-  @Column({ default: 'now()', select: false })
+  @UpdateDateColumn()
   updatedAt: Date;
 }

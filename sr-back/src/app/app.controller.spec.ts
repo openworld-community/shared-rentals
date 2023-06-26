@@ -6,7 +6,6 @@ import { App } from './entities/app.entity';
 
 describe('AppController', () => {
   let appController: AppController;
-  let appService: AppService;
   const mockApp = { id: 0, lastRequestedAt: new Date() };
 
   beforeEach(async () => {

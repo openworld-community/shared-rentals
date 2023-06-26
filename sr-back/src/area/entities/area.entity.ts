@@ -1,9 +1,11 @@
 import {
   Column,
+  CreateDateColumn,
   Entity,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 
 export enum AreaType {
@@ -28,9 +30,9 @@ export class Area {
   @OneToMany(() => Area, (area) => area.parent)
   child: Area[];
 
-  @Column({ default: 'now()', select: false })
+  @CreateDateColumn()
   createdAt: Date;
 
-  @Column({ default: 'now()', select: false })
+  @UpdateDateColumn()
   updatedAt: Date;
 }
