@@ -4,9 +4,30 @@
 }
 
 .footer {
-  padding-top: 22px;
   padding-bottom: 56px;
+  border-top: var(--color-secondary) 1px solid;
 }
+
+.footer__social {
+  display: flex;
+  justify-content: center;
+  padding: 12px 0;
+}
+
+.footer__social__list {
+  list-style: none;
+  display: flex;
+  align-items: baseline;
+}
+
+.footer__social__list-item {
+  margin-right: 30px;
+}
+
+.footer__social__list:last-child {
+  margin-right: 0;
+}
+
 
 .footer__text {
   font-size: 12px;

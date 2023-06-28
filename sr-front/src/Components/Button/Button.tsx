@@ -3,7 +3,7 @@ import React from 'react';
 interface Props {
   textColor?: string;
   width?: string;
-  border: string;
+  border?: string;
   color: string;
   onClick: () => void;
   radius?: string;

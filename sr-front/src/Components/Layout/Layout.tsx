@@ -1,6 +1,23 @@
 import * as React from 'react';
 import './Layout.css';
 import { Outlet } from 'react-router-dom';
+import FB from '../../assets/fb.svg';
+import Instagram from '../../assets/instagram.svg';
+import Linkedin from '../../assets/linkedin.svg';
+import Twitter from '../../assets/tw.svg';
+
+type TSocialLinks = {
+  link?: string;
+  img: string;
+  title?: string;
+};
+
+const social: TSocialLinks[] = [
+  { link: '', img: FB, title: 'facebook' },
+  { link: '', img: Instagram, title: 'Instagram' },
+  { link: '', img: Linkedin, title: 'Linkedin' },
+  { link: '', img: Twitter, title: 'Twitter' },
+];
 
 export const Layout = () => {
   return (
@@ -18,9 +35,27 @@ export const Layout = () => {
       <footer className="footer">
         <div className="container">
           <div className="footer__bottom">
-            <p className="footer__text">
-              &copy; 2023 Shared Rentals - All Rights Reserved
-            </p>
+            <div className="block">
+              <div className="footer__social">
+                <ul className="footer__social__list">
+                  {social.map((profile) => {
+                    return (
+                      <li
+                        key={profile.title}
+                        className="footer__social__list-item"
+                      >
+                        <a href="#">
+                          <img src={profile.img} />
+                        </a>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+              <p className="footer__text">
+                &copy; 2023 Shared Rentals - All Rights Reserved
+              </p>
+            </div>
           </div>
         </div>
       </footer>

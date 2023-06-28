@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Layout } from '../Layout/Layout';
 import { LoginContainer } from '../Login/LoginContainer';
-import { MainPage } from '../MainPage/MainPage';
+import { MainPage } from '../../Pages/MainPage/MainPage';
 
 export default function App() {
   return (
