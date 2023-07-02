@@ -9,14 +9,14 @@ export class CreateUserTable1685958461570 implements MigrationInterface {
 
     queryRunner.query(`
       CREATE TABLE IF NOT EXISTS "user" (
-          "id" SERIAL PRIMARY KEY,
-          "firstName" VARCHAR(255) NOT NULL,
-          "lastName" VARCHAR(255) NOT NULL, 
-          "role" "user_role" NOT NULL DEFAULT 'user',
-          "email" VARCHAR(255) UNIQUE,
-          "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT now(), 
-          "updatedAt" TIMESTAMP WITH TIME ZONE DEFAULT now()
-        );
+        "id" SERIAL PRIMARY KEY,
+        "firstName" VARCHAR(255) NOT NULL,
+        "lastName" VARCHAR(255) NOT NULL, 
+        "role" "user_role" NOT NULL DEFAULT 'user',
+        "email" VARCHAR(255) UNIQUE,
+        "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT now(), 
+        "updatedAt" TIMESTAMP WITH TIME ZONE DEFAULT now()
+      );
     `);
 
     await queryRunner.commitTransaction();
