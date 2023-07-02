@@ -9,7 +9,6 @@ export class CreateHouseDescriptionTable1688263859823
       "id" SERIAL PRIMARY KEY,
       "wifi" boolean,
       "washingmachine" boolean,
-      "wifi" boolean,
       "number_of_rooms" SMALLSERIAL NOT NULL,
       "stove" boolean,
       "oven" boolean,
