@@ -4,10 +4,11 @@ interface Props {
   textColor?: string;
   width?: string;
   border?: string;
-  color: string;
-  onClick: () => void;
+  color?: string;
+  onClick?: () => void;
   radius?: string;
   children?: React.ReactNode;
+  icon?: string;
 }
 
 export const Button: React.FC<Props> = ({
@@ -17,19 +18,20 @@ export const Button: React.FC<Props> = ({
   color,
   onClick,
   radius,
+  icon,
   children,
 }) => {
   return (
     <button
       onClick={onClick}
       style={{
-        color: textColor,
+        color: textColor || '#fff',
         width,
-        backgroundColor: color,
+        backgroundColor: color || '#999',
         border,
-        borderRadius: radius,
+        borderRadius: radius || '6px',
       }}
-      className="p-2"
+      className={`py-2 px-6 ${icon ? icon : ''}`}
     >
       {children}
     </button>

@@ -1,8 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from '../../Components/Button/Button';
+import './MainPage.css';
 import logo from '../../assets/logo.png';
-import serachIcon from '../../assets/ic_search.png';
-import { Link } from "react-router-dom";
+import serachIcon from '../../assets/ic_search.svg';
+
 export const MainPage = () => {
   return (
     <>
@@ -31,38 +33,21 @@ export const MainPage = () => {
           Переживаешь, что не сойдетесь характерами?{' '}
         </p>
         <p>Наш сервис Shared Rentals создан для тебя</p>
-        <Button
-          width="100%"
-          border="none"
-          radius="4px"
-          color="#fff"
-          textColor="#666"
-          onClick={() => console.log('Регистрация')}
-        >
+        <Button width="100%" onClick={() => console.log('Регистрация')}>
           Найти соседа
         </Button>
       </div>
       <div className="p-4">
-        <h2>Если у вас возникли вопросы, свяжитесь с нами</h2>
-        <div className="block py-4">
-          <div className="flex space-x-4">
-            <div className="flex-0">1</div>
-            <div className="flex-1">
-              <div className="font-semibold">Наша локация</div>
-              <div className="font-light text-sm text-gray-500">
-                401 Broadway, 24th Floor, Orchard Cloud View, London
-              </div>
-            </div>
+        <p className="text-center font-semibold">
+          Найдите соседа, указав необходимые данные для поиска
+        </p>
+        <div className="search">
+          <div className="search__icon">
+            <img src={serachIcon} />
           </div>
-          <div className="flex space-x-4">
-            <div className="flex-0">1</div>
-            <div className="flex-1">
-              <div className="font-semibold">Поддержка</div>
-              <div className="font-light text-sm text-gray-500">
-                info@yourdomain.com
-              </div>
-            </div>
-          </div>
+          <div className="search__item">Куда?</div>
+          <div className="search__item">Когда?</div>
+          <div className="search__item">С кем?</div>
         </div>
       </div>
     </>

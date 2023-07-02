@@ -1,0 +1,19 @@
+button.btn__filter {
+  display: flex;
+  align-items: center;
+}
+
+button.btn__filter::before {
+  content: url('../../assets/ic_search.svg');
+  padding: 4px 8px 0 0;
+  font-weight: 700;
+}
+
+.profiles {
+  padding: 20px 16px;
+}
+
+
+
+
+

@@ -10,8 +10,8 @@
 
 .footer__social {
   display: flex;
-  justify-content: center;
   padding: 12px 0;
+  justify-content: center;
 }
 
 .footer__social__list {
@@ -27,7 +27,6 @@
 .footer__social__list:last-child {
   margin-right: 0;
 }
-
 
 .footer__text {
   font-size: 12px;
