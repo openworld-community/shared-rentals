@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
 import ArrowBack from '../../assets/arrow_back.svg';
+import { Button } from '../../Components/Button/Button';
 import './ProfileView.css';
-import { Button } from "../../Components/Button/Button";
 
 export const ProfileView: FC = () => {
   return (

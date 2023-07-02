@@ -3,7 +3,7 @@ import CrossIcon from '../../assets/cross.svg';
 import LikeIcon from '../../assets/Heart.svg';
 import { Button } from '../../Components/Button/Button';
 import './ProfileList.css';
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 interface Props {
   name: string;
@@ -51,4 +51,4 @@ export const ProfileList: FC<Props> = ({
       </div>
     </Link>
   );
-}
+};
