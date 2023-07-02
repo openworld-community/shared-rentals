@@ -7,6 +7,7 @@ export class CreateHouseDescriptionTable1688263859823
     queryRunner.query(`
       CREATE TABLE IF NOT EXISTS "house_description" (
       "id" SERIAL PRIMARY KEY,
+      "userId" SERIAL REFERENCES "user" ("id"),
       "wifi" boolean,
       "washingmachine" boolean,
       "number_of_rooms" SMALLSERIAL NOT NULL,

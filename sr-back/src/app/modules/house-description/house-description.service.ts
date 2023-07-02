@@ -9,6 +9,7 @@ import { EntityNotFoundError, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateHouseDescriptionInput } from './dto/create-house-description.dto';
 import { UserNotFoundError, UserService } from '../user/user.service';
+import { UpdateHouseDescriptionInput } from './dto';
 
 export class HouseDescriptionNotFound extends Error {}
 export class HouseDescriptionAlreadyExists extends Error {}
@@ -70,21 +71,68 @@ export class HouseDescriptionService {
       const user = await this.userService.getUserById(userId);
 
       // TODO: add USER field to houseDescription
-      // const houseDescriptionExists =
-      //   await this.houseDescriptionRepository.exist({
-      //     where: {
-      //       user,
-      //     },
-      //   });
+      const houseDescriptionExists =
+        await this.houseDescriptionRepository.exist({
+          where: {
+            user,
+          },
+        });
 
-      // if (houseDescriptionExists) {
-      //   throw new HouseDescriptionAlreadyExists();
-      // }
+      if (houseDescriptionExists) {
+        throw new HouseDescriptionAlreadyExists();
+      }
 
-      return new HouseDescription();
+      const houseDescription = await this.houseDescriptionRepository.insert({
+        ...body,
+        user,
+      });
+
+      return houseDescription.raw[0] as HouseDescription;
     } catch (error) {
       if (error instanceof EntityNotFoundError) {
         throw UserNotFoundError;
+      }
+
+      throw error;
+    }
+  }
+
+  async updateHouseDescription(
+    body: UpdateHouseDescriptionInput,
+    id: number,
+  ): Promise<HouseDescription | undefined> {
+    try {
+      const user = await this.userService.getUserById(id);
+
+      const existingProfile =
+        await this.houseDescriptionRepository.findOneOrFail({
+          where: {
+            user,
+          },
+        });
+
+      return (
+        await this.houseDescriptionRepository.update(
+          { id: existingProfile.id },
+          { ...body },
+        )
+      ).raw[0] as HouseDescription;
+    } catch (error) {
+      if (error instanceof EntityNotFoundError) {
+        throw new HouseDescriptionNotFound();
+      }
+
+      throw error;
+    }
+  }
+
+  async deleteHouseDescription(id: number): Promise<number | undefined | null> {
+    try {
+      const user = await this.userService.getUserById(id);
+      return (await this.houseDescriptionRepository.delete({ user })).affected;
+    } catch (error) {
+      if (error instanceof EntityNotFoundError) {
+        throw new HouseDescriptionNotFound();
       }
 
       throw error;

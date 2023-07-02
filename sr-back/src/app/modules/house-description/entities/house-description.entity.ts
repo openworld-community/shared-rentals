@@ -1,4 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { User } from '../../user/entities/user.entity';
 
 export enum UserRole {
   user = 'user',
@@ -10,6 +17,10 @@ export enum UserRole {
 export class HouseDescription {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @OneToOne(() => User)
+  @JoinColumn()
+  user: User;
 
   @Column()
   wifi: boolean;
