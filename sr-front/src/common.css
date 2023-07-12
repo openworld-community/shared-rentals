@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: Inter, sans-serif;
+  --color-primary: #15141A;
+  --color-secondary: #637381;
+  --color-gray-d9: #D9D9D9;
+  --color-gray-e7: #E7E7E7;
+}
+
+h1 {
+  font-weight: 700;
+  font-size: 22px;
+  font-style: normal;
+  color: black;
+  margin-bottom: 22px;
+}
+
+h2 {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: normal;
+  color: black;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: normal;
+  color: black;
+  margin-bottom: 18px;
+}
