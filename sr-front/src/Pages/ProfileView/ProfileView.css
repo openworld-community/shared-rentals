@@ -1,0 +1,36 @@
+.profile-view__container {
+  padding: 10px 10px 30px 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-view__image {
+  width: 210px;
+  height: 210px;
+  flex-shrink: 0;
+  border-radius: 100%;
+  margin-right: 12px;
+  background: url("../../assets/profile_default.svg") no-repeat center var(--color-gray-d9);
+}
+
+.profile-view__bio {
+  padding: 22px 40px;
+}
+
+.profile-view__bio h2 {
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.profile-view__bio span {
+  color: var(--color-secondary);
+}
+
+.profile-view__description {
+  padding: 0 40px;
+  font-size: 16px;
+}
+
+.profile-view__description span {
+  font-weight: 700;
+}
