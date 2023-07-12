@@ -1,37 +1,33 @@
-import React from 'react';
+import React, { ButtonHTMLAttributes, FC } from 'react';
 
-interface Props {
-  textColor?: string;
-  width?: string;
-  border?: string;
-  color?: string;
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  large?: boolean;
+  bgWhite?: boolean;
   onClick?: () => void;
-  radius?: string;
   children?: React.ReactNode;
   icon?: string;
 }
 
-export const Button: React.FC<Props> = ({
-  textColor,
-  width,
-  border,
-  color,
+export const Button: FC<ButtonProps> = ({
+  large,
+  bgWhite,
   onClick,
-  radius,
   icon,
   children,
-}) => {
+  ...restProps
+}: ButtonProps) => {
   return (
     <button
+      {...restProps}
       onClick={onClick}
-      style={{
-        color: textColor || '#fff',
-        width,
-        backgroundColor: color || '#999',
-        border,
-        borderRadius: radius || '6px',
-      }}
       className={`py-2 px-6 ${icon ? icon : ''}`}
+      style={{
+        color: bgWhite ? '#999' : '#FFF',
+        backgroundColor: bgWhite ? '#FFF' : '#999',
+        borderRadius: '6px',
+        fontSize: large ? '16px' : '14px',
+        padding: large ? '12px' : '8px',
+      }}
     >
       {children}
     </button>

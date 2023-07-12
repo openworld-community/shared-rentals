@@ -52,29 +52,13 @@ export const LoginContainer = () => {
           <div className="underline">Забыли пароль?</div>
         </div>
         <div className="space-y-4">
-          <Button
-            width="100%"
-            border="none"
-            radius="6px"
-            color="#999"
-            textColor="#fff"
-            onClick={() => console.log('Регистрация')}
-          >
-            Продолжить
-          </Button>
+          <Button onClick={() => console.log('Продолжить')}>Продолжить</Button>
           <div className="text-xs flex justify-center">
             <span className="grow hline" />
             <span className="grow-0">или</span>
             <span className="grow hline" />
           </div>
-          <Button
-            width="100%"
-            border="none"
-            radius="6px"
-            color="#999"
-            textColor="#fff"
-            onClick={() => console.log('Регистрация')}
-          >
+          <Button onClick={() => console.log('Регистрация')}>
             Регистрация
           </Button>
         </div>
